@@ -45,11 +45,7 @@ export default async function CatchAllPages({
   );
   const url = `${segments.join("/")}${query}`;
 
-  const { data, error } = await request<{ data: DynamicZone }>(url);
-
-  if (error) {
-    throw new Error(error.message);
-  }
+  const { data } = await request<{ data: DynamicZone }>(url);
 
   const { layouts } = data?.data ?? {};
   return (
