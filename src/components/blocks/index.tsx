@@ -1,18 +1,17 @@
-import dynamic from "next/dynamic";
+import { useMemo } from "react";
+import { blockComponents } from "./blocks.config";
 
-export default function Blocks({ blocks }: { blocks: Block[] }) {
-  return (
-    <div className="flex flex-col space-y-8">
-      {blocks.map((block) => {
-        switch (block.__component) {
-          case "common.hero": {
-            const Com = dynamic(() => import("./hero"));
-            return <Com key={block.id} {...(block as unknown as Hero)} />;
-          }
-          default:
-            return "Block Not supported yet";
-        }
-      })}
-    </div>
-  );
+export default function Blocks({ blocks }: Readonly<{ blocks: Block[] }>) {
+	const coms = useMemo(
+		() =>
+			blocks.map((block) => {
+				const Com = blockComponents[block.__component];
+				if (!Com) {
+					return <div key={block.id}>Block not found</div>;
+				}
+				return <Com key={block.id} {...block} />;
+			}),
+		[blocks],
+	);
+	return <div className="flex flex-col space-y-8">{coms}</div>;
 }
