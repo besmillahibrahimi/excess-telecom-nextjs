@@ -9,10 +9,9 @@ export default function Blocks({
     () =>
       blocks.map((block) => {
         if (block.platform && platform) {
-          console.log("platform ", block.__component, block.platform);
           if (Array.isArray(block.platform)) {
             const p = block.platform.some((p) => p.name === platform);
-            console.log("platform ", p, platform);
+
             if (!p) return null;
           } else if (block.platform.name !== platform) return null;
         }
