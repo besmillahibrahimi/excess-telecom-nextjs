@@ -3,4 +3,5 @@ type Hero = {
   image?: Media;
   notice?: string;
   background?: string;
+  platform?: Platform;
 };
